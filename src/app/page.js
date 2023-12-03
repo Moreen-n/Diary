@@ -1,15 +1,15 @@
 "use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
-import CalenderDate from '@/components/day';
-import CalenderMonth from '@/components/month';
-import DiaryMessage from '@/components/textArea';
-import CalenderYear from '@/components/year';
+import CalenderDate from "@/components/day";
+import CalenderMonth from "@/components/month";
+import CalenderYear from "@/components/year";
 
 const Diary = () => {
   const [year, setYear] = useState(new Date().getFullYear());
   const [month, setMonth] = useState(new Date().getMonth() + 1); // Months are zero-based
+  const [selectedDay, setSelectedDay] = useState(new Date().getDate());
   const daysInMonth = new Date(year, month, 0).getDate();
 
   const monthNames = [
@@ -42,6 +42,9 @@ const Diary = () => {
   const handleNextMonth = () => {
     setMonth(month === 12 ? 1 : month + 1);
   };
+  const handleDayClick = (day) => {
+    setSelectedDay(day);
+  };
 
   return (
     <div id="main">
@@ -60,8 +63,14 @@ const Diary = () => {
         onNextYear={handleNextYear}
       />
 
-      <CalenderDate daysInMonth={daysInMonth} />
-      <DiaryMessage />
+      <CalenderDate
+        month={month}
+        year={year}
+        setSelectedDay={setSelectedDay}
+        daysInMonth={daysInMonth}
+        selectedDay={selectedDay}
+        onDayClick={handleDayClick}
+      />
     </div>
   );
 };
