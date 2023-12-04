@@ -52,11 +52,11 @@ const [events, setEvents]= useState([])
       
         <div className={`message-input ${messageToShow ? 'highlighted-textArea':'' }`}>
           <textarea
-            placeholder="Type your message..."
+            placeholder="Dear diary..."
             value={messageToShow || message}
             onChange={handleInputChange}
           />
-          <button onClick={handleSaveMessage}>Submit</button>
+          <button id='sub' onClick={handleSaveMessage}>Submit message</button>
         </div>
      
 
