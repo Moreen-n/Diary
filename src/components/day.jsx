@@ -5,23 +5,27 @@ import { useState } from 'react';
 const CalendarDate = ({ setSelectedDay, selectedDay, daysInMonth, currentDay, onDayClick, month, year }) => {
   const [message, setMessage] = useState('');
   const [events, setEvents] = useState([]);
-// 
+
   const handleInputChange = (event) => {
     setMessage(event.target.value);
   };
-// saving a message for a selected day
+
   const handleSaveMessage = () => {
+    const eventKey = `${selectedDay}-${month}-${year}`;
     setEvents([
-      ...events,
-      { [`${selectedDay}-${month}-${year}`]: message },
+      ...events.filter((e) => !e.hasOwnProperty(eventKey)),
+      { [eventKey]: message },
     ]);
     setMessage('');
   };
-// here am checking for the day that has an event
+
   const hasMessage = (day) => {
+    return events.some((e) => e.hasOwnProperty(`${day}-${month}-${year}`));
+  };
+
+  const getMessageForDay = (day) => {
     const messageObj = events.find((e) => e.hasOwnProperty(`${day}-${month}-${year}`));
-    // Obj is message object
-    return messageObj ? true : false;
+    return messageObj ? messageObj[`${day}-${month}-${year}`] : '';
   };
 
   return (
@@ -32,7 +36,10 @@ const CalendarDate = ({ setSelectedDay, selectedDay, daysInMonth, currentDay, on
             index + 1 === selectedDay ? 'selected-day' : ''
           } ${hasMessage(index + 1) ? 'has-message' : ''}`}
           key={index + 1}
-          onClick={() => onDayClick(index + 1)}
+          onClick={() => {
+            onDayClick(index + 1);
+            setMessage(getMessageForDay(index + 1));
+          }}
         >
           {hasMessage(index + 1) ? <span>💌</span> : null}
           {index + 1}
@@ -46,7 +53,7 @@ const CalendarDate = ({ setSelectedDay, selectedDay, daysInMonth, currentDay, on
           onChange={handleInputChange}
         />
         <button id='sub' onClick={() => { onDayClick(selectedDay); handleSaveMessage(); }}>
-          Submit Memory
+          Submit message
         </button>
       </div>
     </div>
