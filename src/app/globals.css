@@ -9,7 +9,7 @@ body {
   flex-direction: column;
   width: 100%;
   align-items: center;
-  gap: 2rem;
+
   margin: 2rem 0;
   background-color: #01050830;
   padding: 1rem;
@@ -56,4 +56,8 @@ body {
   position: static;
   height: 40px;
   position: sticky;
+}
+.diary {
+  padding: 0px;
+  margin-bottom: 0px;
 }
