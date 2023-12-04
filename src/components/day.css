@@ -9,6 +9,7 @@
 .selected-day,
 .highlighted-textArea textarea {
   background-color: lightblue;
+  font-weight: bold;
 }
 
 .message-input {
@@ -22,4 +23,6 @@ textarea {
 }
 #sub {
   width: 100%;
+  border-radius: 10px;
+  background-color: rgb(239, 56, 239);
 }

@@ -4,11 +4,21 @@ body {
 /* #main {
   justify-content: center;
 } */
+#main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  gap: 2rem;
+  margin: 2rem 0;
+  background-color: #01050830;
+  padding: 1rem;
+}
 .year {
   display: flex;
   align-items: center;
   margin-top: 0px;
-  margin-left: 600px;
+
   padding: 0px;
   gap: 10px;
 }
@@ -16,16 +26,13 @@ body {
   display: flex;
   align-items: center;
   margin-top: 0px;
-  margin-left: 600px;
+
   gap: 10px;
-}
-.diary {
-  margin-left: 620px;
 }
 
 .days {
   display: inline-flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
   gap: 10px;
   justify-content: space-around;
@@ -37,9 +44,6 @@ body {
   margin: 3px;
 }
 
-#sub {
-  width: 100%;
-}
 .days-container {
   display: flex;
   flex-wrap: wrap;

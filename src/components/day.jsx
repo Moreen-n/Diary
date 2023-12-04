@@ -1,68 +1,56 @@
 import './day.css';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-const CalenderDate = ({ setSelectedDay, selectedDay, daysInMonth, currentDay, onDayClick, month, year }) => {
-  
+const CalendarDate = ({ setSelectedDay, selectedDay, daysInMonth, currentDay, onDayClick, month, year }) => {
   const [message, setMessage] = useState('');
-const [events, setEvents]= useState([])
-
+  const [events, setEvents] = useState([]);
+// 
   const handleInputChange = (event) => {
     setMessage(event.target.value);
   };
-
+// saving a message for a selected day
   const handleSaveMessage = () => {
-  
-    
-   
+    setEvents([
+      ...events,
+      { [`${selectedDay}-${month}-${year}`]: message },
+    ]);
     setMessage('');
-    setSelectedDay(null);
-    setEvents([...events,{[`${selectedDay}-${month}-${year}`]:message}])
-    
   };
-  const messageObj = events.find(e => `${selectedDay}-${month}-${year}` in e );
-  const messageToShow = messageObj?.[`${selectedDay}-${month}-${year}`]
-  console.log(messageObj, "msg obj")
-
-
-
-  // const handleShowMessage = () => {
-  //   // const message = events.find(e => Object.keys(e)===`${selectedDay}-${month}-${year}`);
-  //   if(messageToShow){
-  //     setShowMessage(true)
-  //   }else{
-  //     setShowMessage(false)
-  //   }
-    
-  // }
+// here am checking for the day that has an event
+  const hasMessage = (day) => {
+    const messageObj = events.find((e) => e.hasOwnProperty(`${day}-${month}-${year}`));
+    // Obj is message object
+    return messageObj ? true : false;
+  };
 
   return (
     <div id='days-container'>
       {[...Array(daysInMonth)].map((_, index) => (
         <div
-          className={`days ${index + 1 === currentDay ? 'current-day' : ''} ${index + 1 === selectedDay ? 'selected-day' : ''}`}
+          className={`days ${index + 1 === currentDay ? 'current-day' : ''} ${
+            index + 1 === selectedDay ? 'selected-day' : ''
+          } ${hasMessage(index + 1) ? 'has-message' : ''}`}
           key={index + 1}
           onClick={() => onDayClick(index + 1)}
-        > 
-        {index + 1 === selectedDay && messageToShow ? <span>🗨️</span>: null}
+        >
+          {hasMessage(index + 1) ? <span>💌</span> : null}
           {index + 1}
         </div>
       ))}
 
-      
-        <div className={`message-input ${messageToShow ? 'highlighted-textArea':'' }`}>
-          <textarea
-            placeholder="Dear diary..."
-            value={messageToShow || message}
-            onChange={handleInputChange}
-          />
-          <button id='sub' onClick={handleSaveMessage}>Submit message</button>
-        </div>
-     
-
-     
+      <div className={`message-input ${hasMessage(selectedDay) ? 'highlighted-textArea' : ''}`}>
+        <textarea
+          placeholder="Dear diary..."
+          value={message}
+          onChange={handleInputChange}
+        />
+        <button id='sub' onClick={() => { onDayClick(selectedDay); handleSaveMessage(); }}>
+          Submit message
+        </button>
+      </div>
     </div>
   );
 };
 
-export default CalenderDate;
+export default CalendarDate;
