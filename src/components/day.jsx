@@ -46,7 +46,7 @@ const CalendarDate = ({ setSelectedDay, selectedDay, daysInMonth, currentDay, on
           onChange={handleInputChange}
         />
         <button id='sub' onClick={() => { onDayClick(selectedDay); handleSaveMessage(); }}>
-          Submit message
+          Submit Memory
         </button>
       </div>
     </div>
